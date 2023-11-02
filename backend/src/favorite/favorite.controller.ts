@@ -8,9 +8,7 @@ export class FavoriteController {
 
     @Post('markAsFavorite')
     markAsFavorite (@Body() dto: MovieDto) {
-        console.log(dto);
-        
-        return this.favoriteService.markAsFavorite();
+        return this.favoriteService.markAsFavorite(dto);
     }
 
     @Delete('unmarkAsFavorite')
