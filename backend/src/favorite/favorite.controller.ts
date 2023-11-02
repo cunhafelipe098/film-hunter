@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Post, Req } from "@nestjs/common";
+import { Body, Controller, Delete, Post } from "@nestjs/common";
 import { FavoriteService } from "./favorite.service";
 import { MovieDto } from "./dto";
 
