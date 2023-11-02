@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Movie {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title String @unique
+  plot String?
+  poster String?
+  actors String?
+  rating Decimal?
+  awards String?
+  favorites Favorite?
+}
+
+// In a system with user management movieId and userId should be primary key
+model Favorite {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  movieId Int @unique
+  movie Movie @relation(fields: [movieId], references: [id])
+}
