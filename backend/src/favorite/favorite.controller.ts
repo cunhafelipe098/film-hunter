@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Post } from "@nestjs/common";
+import { Body, Controller, Delete, HttpCode, HttpStatus, Param, ParseIntPipe, Post } from "@nestjs/common";
 import { FavoriteService } from "./favorite.service";
 import { MovieDto } from "./dto";
 
@@ -6,14 +6,15 @@ import { MovieDto } from "./dto";
 export class FavoriteController {
     constructor(private favoriteService: FavoriteService) {}
 
-    @Post('markAsFavorite')
+    @Post('')
     markAsFavorite (@Body() dto: MovieDto) {
         return this.favoriteService.markAsFavorite(dto);
     }
 
-    @Delete('unmarkAsFavorite')
-    unmarkAsFavorite () {
-        return this.favoriteService.unmarkAsFavorite();
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @Delete(':id')
+    unmarkAsFavorite (@Param('id', ParseIntPipe) favoriteId: number) {
+        return this.favoriteService.deleteFavoriteById(favoriteId);
     }
 }
  

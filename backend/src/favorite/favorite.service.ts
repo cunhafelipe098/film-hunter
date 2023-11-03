@@ -32,9 +32,24 @@ export class FavoriteService {
         }
     };
 
-    unmarkAsFavorite() {
-        return {
-            msg: 'HELLO WORLD'
-        };
+    async deleteFavoriteById(favoriteId: number) {
+
+        const favorite = await this.prisma.favorite.findUnique({
+            where: {
+              id: favoriteId,
+            },
+        });
+
+        if (!favorite) {
+            throw new ForbiddenException(
+                'favorite not found',
+            );
+        }
+
+        await this.prisma.favorite.delete({
+            where: {
+              id: favoriteId,
+            },
+        });
     }
 }
