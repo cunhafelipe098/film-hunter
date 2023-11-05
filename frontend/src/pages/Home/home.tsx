@@ -1,16 +1,46 @@
 
+import React, { useState } from 'react';
 import HomeSkeleton from './components/homeSkeleton';
+import { api } from '../../components/Api'
+import './home.scss'
+
+import '@ui5/webcomponents/dist/features/InputSuggestions.js';
 import { 
   Title, 
   Text,
   Input,
-  Button 
+  Button, 
+  IllustratedMessage
 } from '@ui5/webcomponents-react';
-import '@ui5/webcomponents/dist/features/InputSuggestions.js';
 
-import './home.scss'
+type MovieType = {
+  title: string;
+  plot?: string;
+  poster?: string;
+  actors?: string;
+  rating?: number;
+  awards?: string;
+}
+
 
 function Home() {
+
+  const [loading, setLoading] = useState(false);
+  const [movieTitle, setMovieTitle] = useState('');
+  const [movie, setMovie] = useState<MovieType>();
+
+  const handleInputChange = (event: any) => {
+    setMovieTitle(event.target.value);
+  };
+
+  const searchMovie = async () => {
+    if (movieTitle.length > 2) {
+      setLoading(!loading);
+      const response = await api.get(`/movie/:${movieTitle}`);
+      setMovie(response.data);
+      setMovieTitle('');
+    }
+  }
 
   return (
     <>
@@ -26,11 +56,12 @@ function Home() {
       <div className="serch-container">
         <div>
           <Input
-            onChange={function Ta(){}}
+            onChange={handleInputChange}
             onInput={function Ta(){}}
             onSuggestionItemPreview={function Ta(){}}
             onSuggestionItemSelect={function Ta(){}}
             placeholder='Enter movie title'
+            value={movieTitle}
             style={{
               width: '50vw'
             }}
@@ -39,7 +70,7 @@ function Home() {
         <div className="buttons-container">
           <Button
             design="Emphasized"
-            onClick={function Ta(){}}
+            onClick={searchMovie}
             style={{marginLeft: '1rem', marginRight: '1rem'}}
           >
             Search
@@ -54,7 +85,10 @@ function Home() {
 
         </div>
       </div>
-      <HomeSkeleton/>
+      {
+        loading ? <HomeSkeleton/> :  <IllustratedMessage style={{ height: '400px' }}/>
+      }
+      
     </>
   )
 }
