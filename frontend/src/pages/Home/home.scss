@@ -1,0 +1,22 @@
+
+.serch-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-gap: 20px;
+  list-style: none;
+  text-decoration: none;
+  margin-bottom: 4rem;
+  
+  @media only screen and (max-width: 650px) {
+    grid-template-columns: 3fr 1fr;
+  }
+  
+  @media only screen and (max-width: 500px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: flex-end;
+}
