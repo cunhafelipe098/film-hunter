@@ -1,12 +1,19 @@
 import './Skeleton.scss'
-import { Card } from '@ui5/webcomponents-react';
+import { Card, BusyIndicator } from '@ui5/webcomponents-react';
 
-function Skeleton() {
+interface CardDimensionProps {
+  width: number,
+  height: number
+  busyIndicator?: boolean
+}
+
+function Skeleton(props: CardDimensionProps) {
 
   return (
-    <div >
-      <Card className="skeleton-placeholder">        
-      </Card>
+    <div className="skeleton-placeholder" style={{ width: `${props.width}rem`, height: `${props.height}rem`}}>
+      <BusyIndicator
+            active={props.busyIndicator}
+      /> 
     </div>
   )
 }

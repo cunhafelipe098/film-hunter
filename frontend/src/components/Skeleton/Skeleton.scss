@@ -1,8 +1,11 @@
 .skeleton-placeholder {
-    height: 20rem;
-    width: 80%;
     background-color: #938b8b;
     animation: loading 1s infinite alternate;
+    margin: 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
