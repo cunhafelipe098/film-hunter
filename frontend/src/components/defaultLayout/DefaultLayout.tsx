@@ -3,7 +3,7 @@ import '@ui5/webcomponents-react/dist/Assets';
 
 import { useState } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
-import { Button, Page, Bar, Label } from '@ui5/webcomponents-react';
+import { Button, Page, Bar } from '@ui5/webcomponents-react';
 import { setTheme } from '@ui5/webcomponents-base/dist/config/Theme.js';
 
 
