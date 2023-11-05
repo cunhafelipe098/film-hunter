@@ -1,4 +1,4 @@
-import './DefaultLayout.scss'
+import './defaultLayout.scss'
 import '@ui5/webcomponents-react/dist/Assets';
 
 import { useState } from 'react'

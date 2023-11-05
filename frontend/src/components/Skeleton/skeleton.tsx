@@ -1,5 +1,5 @@
-import './Skeleton.scss'
-import { Card, BusyIndicator } from '@ui5/webcomponents-react';
+import './skeleton.scss'
+import { BusyIndicator, Badge } from '@ui5/webcomponents-react';
 
 interface CardDimensionProps {
   width: number,
@@ -10,11 +10,11 @@ interface CardDimensionProps {
 function Skeleton(props: CardDimensionProps) {
 
   return (
-    <div className="skeleton-placeholder" style={{ width: `${props.width}rem`, height: `${props.height}rem`}}>
+    <Badge className="skeleton-placeholder" color-scheme="10" style={{ width: `${props.width}rem`, height: `${props.height}rem`}}>
       <BusyIndicator
             active={props.busyIndicator}
       /> 
-    </div>
+    </Badge>
   )
 }
 
