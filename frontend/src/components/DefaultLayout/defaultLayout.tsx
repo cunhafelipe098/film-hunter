@@ -31,44 +31,48 @@ function DefaulLayout() {
     }
 
     return (
-        <Page
-            className='default-page'
-            floatingFooter={true}
-            footer={
-            <Bar 
-                design="FloatingFooter"
-                startContent={<Button icon="home" title="Go Home"/>}
-            />
-            }
-            header={
+        <div className='default-page'>
+            <Page
+                floatingFooter={true}
+                footer={
                 <Bar 
-                    endContent={
-                        <Button 
-                            onClick={toggleColorScheme} 
-                            icon={colorScheme === 'dark' ? 'light-mode' : 'dark-mode'} 
-                            title="Change Theme"
-                        />
-                    } 
+                    design="FloatingFooter"
                     startContent={<Button icon="home" title="Go Home"/>}
-                >
-                    <div className='menu-container'>
-                        {
-                            pages?.map((item) =>
-                                <div
-                                    className={`${currentUrl === `${item.label?.props?.to}` ? 'selectedItem' : ''}`}
-                                >
-                                        {item.label}
-                                </div>
-                            )
-                        }
+                />
+                }
+                header={
+                    <Bar 
+                        endContent={
+                            <Button 
+                                onClick={toggleColorScheme} 
+                                icon={colorScheme === 'dark' ? 'light-mode' : 'dark-mode'} 
+                                title="Change Theme"
+                            />
+                        } 
+                        startContent={<Button icon="home" title="Go Home"/>}
+                    >
+                        <div className='menu-container'>
+                            {
+                                pages?.map((item) =>
+                                    <div
+                                        className={`${currentUrl === `${item.label?.props?.to}` ? 'selectedItem' : ''}`}
+                                    >
+                                            {item.label}
+                                    </div>
+                                )
+                            }
+                        </div>
+                    </Bar>
+                }
+                
+            >
+                <div className='default-page-container'>
+                    <div className='container'>
+                        <Outlet/>
                     </div>
-                </Bar>
-            }
-        >
-            <div className='container'>
-                <Outlet/>
-            </div>
-        </Page>
+                </div>
+            </Page>
+        </div>
 
     )
 }

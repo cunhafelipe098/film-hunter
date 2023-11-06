@@ -51,7 +51,7 @@ function Home() {
       >
         This option denotes a powerful tool for users to explore and discover movies. It functions as an efficient and robust search system that allows users to find and retrieve information about movies, making the process of searching for films straightforward and effective. It's like a specialized engine designed to help users search for, filter, and access movie-related data, providing a comprehensive and user-friendly experience.
       </Text>
-      <div className="serch-container">
+      <div className="search-container">
         <div>
           <Input
             onChange={handleInputChange}
@@ -61,7 +61,8 @@ function Home() {
             placeholder='Enter movie title'
             value={movieTitle}
             style={{
-              width: '50vw'
+              width: '50vw',
+              maxWidth: '60rem'
             }}
           />
         </div>
