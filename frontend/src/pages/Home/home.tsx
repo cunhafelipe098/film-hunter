@@ -11,13 +11,12 @@ import {
   Title, 
   Text,
   Input,
-  Button, 
-  IllustratedMessage
+  Button
 } from '@ui5/webcomponents-react';
 
 function Home() {
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [movieTitle, setMovieTitle] = useState('');
   const [movie, setMovie] = useState<MovieType | undefined>(undefined);
 
@@ -32,9 +31,10 @@ function Home() {
   const searchMovie = async () => {
     if (movieTitle.length > 2) {
       setLoading(true);
+      //setTimeout just to be able to understand skeleton/placehold loading
       await setTimeout(async () => {
         const response = await api.get(`/movie/:${movieTitle}`);
-        setMovie(response.data);
+        setMovie({...response.data, rating: parseFloat(response.data.rating)} );
       }, 3000);
       setMovieTitle('');
     }
@@ -87,7 +87,6 @@ function Home() {
       {
         loading ? <HomeSkeleton/> : <MovieDetails movie={movie}/>
       }
-      {/* <IllustratedMessage style={{ height: '400px' }}/> */}
     </>
   )
 }
