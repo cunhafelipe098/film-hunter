@@ -1,38 +1,62 @@
-import Skeleton from '../../../../components/Skeleton';
+import { useState } from 'react';
 import { MovieType } from '.';
+import { api } from '../../../../components/Api'
 import './movieDetails.scss';
 
 import { 
-    Title, 
+    Title,
     Text,
     Label,
     RatingIndicator,
     Button,
-    IllustratedMessage
+    IllustratedMessage,
+    MessageStrip
 } from '@ui5/webcomponents-react';
 
 type props = {
     movie: MovieType | undefined
 }
 
+const CREATED = 201;
+const NOT_APLICAVLE = 'N/A'
+
 function MovieDetails({ movie }: props) {
-    if (!movie) {
-        return <IllustratedMessage style={{ height: '400px' }}/>
+    const [notification, setNotification] = useState(false);
+    const favoriteMovie = async () => {
+        const response = await api.post(`/favorite`, movie);
+        if (response.status === CREATED) {
+            setNotification(true);
+            showNotification()
+        }
     }
 
-    return (
+    const showNotification = async () => {
+        setTimeout(() => {
+          setNotification(false);
+        }, 5000);
+    };
+
+    const closeNotification = async () => {
+        setNotification(false);
+    };
+
+    return !movie ? <IllustratedMessage style={{ height: '400px' }}/> : (
+        
         <div className='movie-detail-container'>
             <div className='info-container'>
-                <Title>{movie.title}</Title>
-                <Text>{movie.plot}</Text>
+            
+                <Title wrappingType="Normal">{movie.title}</Title>
+                { movie.plot !== NOT_APLICAVLE && <Text>{movie.plot}</Text> }
 
                 <div>
-                    <div className='label-container'>
-                        <Label>
-                            <strong>Actor</strong>
-                        </Label>
-                        <Text>{movie.actors}</Text>
-                    </div>
+                    {movie.actors !== NOT_APLICAVLE && (
+                        <div className='label-container'>
+                            <Label>
+                                <strong>Actor</strong>
+                            </Label>
+                            <Text>{movie.actors}</Text>
+                        </div>
+                    )}
                     <div className='label-container'>
                         <Label>
                             <strong>Review</strong>
@@ -44,16 +68,22 @@ function MovieDetails({ movie }: props) {
                     <Button
                         icon="heart"
                         iconEnd
-                        onClick={function Ta(){}}
+                        onClick={favoriteMovie}
                         design="Attention"
                     >
                         Favorite
                     </Button>
+                    {notification ? (
+                            <MessageStrip className='messageStrip' design='Positive' onClose={closeNotification}>
+                                Saved as favorite
+                            </MessageStrip>
+                        ) : ''
+                    }
                 </div>
             </div>
 
             <div>
-                <img src={movie.poster} alt="movie poster"/>
+                { movie.poster !== NOT_APLICAVLE  && <img src={movie.poster} alt="movie poster"/> }
             </div>
         </div>
     )
