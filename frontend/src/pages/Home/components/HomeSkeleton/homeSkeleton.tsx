@@ -1,4 +1,4 @@
-import Skeleton from '../../../components/Skeleton';
+import Skeleton from '../../../../components/Skeleton';
 import './homeSkeleton.scss';
 
 function HomeSkeleton() {

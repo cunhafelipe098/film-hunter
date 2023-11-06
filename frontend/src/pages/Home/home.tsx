@@ -1,6 +1,8 @@
 
-import React, { useState } from 'react';
-import HomeSkeleton from './components/homeSkeleton';
+import { useState, useEffect } from 'react';
+import HomeSkeleton from './components/HomeSkeleton';
+import MovieDetails, { MovieType } from './components/MovieDetails';
+
 import { api } from '../../components/Api'
 import './home.scss'
 
@@ -13,31 +15,27 @@ import {
   IllustratedMessage
 } from '@ui5/webcomponents-react';
 
-type MovieType = {
-  title: string;
-  plot?: string;
-  poster?: string;
-  actors?: string;
-  rating?: number;
-  awards?: string;
-}
-
-
 function Home() {
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [movieTitle, setMovieTitle] = useState('');
-  const [movie, setMovie] = useState<MovieType>();
+  const [movie, setMovie] = useState<MovieType | undefined>(undefined);
 
   const handleInputChange = (event: any) => {
     setMovieTitle(event.target.value);
   };
 
+  useEffect(() => {
+    setLoading(false);
+  }, [movie]);
+
   const searchMovie = async () => {
     if (movieTitle.length > 2) {
-      setLoading(!loading);
-      const response = await api.get(`/movie/:${movieTitle}`);
-      setMovie(response.data);
+      setLoading(true);
+      await setTimeout(async () => {
+        const response = await api.get(`/movie/:${movieTitle}`);
+        setMovie(response.data);
+      }, 3000);
       setMovieTitle('');
     }
   }
@@ -86,9 +84,9 @@ function Home() {
         </div>
       </div>
       {
-        loading ? <HomeSkeleton/> :  <IllustratedMessage style={{ height: '400px' }}/>
+        loading ? <HomeSkeleton/> : <MovieDetails movie={movie}/>
       }
-      
+      {/* <IllustratedMessage style={{ height: '400px' }}/> */}
     </>
   )
 }
