@@ -23,7 +23,6 @@ function Favorite() {
       //setTimeout just to be able to understand skeleton/placehold loading
       setTimeout(async () => {
         const response = await api.get(`/movie`);
-        console.log(response);
         setFavoriteMovies(response.data);
       }, 3000);
   }, []);
